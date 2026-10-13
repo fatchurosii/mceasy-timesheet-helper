@@ -33,7 +33,16 @@ npm run start -- --help
 | `--from YYYY-MM-DD --to YYYY-MM-DD` | Process an inclusive date range.              |
 | `--submit`                          | Save prepared logs. Omit it for preview mode. |
 | `--headed`                          | Display the browser while the script runs.    |
+| `--record`                          | Save a WebM recording under `artifacts/`.     |
 | `--help`, `-h`                      | Display the available options.                |
+
+Value options support both `--date 2026-10-14` and `--date=2026-10-14` syntax.
+
+## Demo
+
+[Watch the Timesheet automation recording](docs/timesheet-preview.webm)
+
+The recording uses preview mode, so it fills the form without saving a log.
 
 ## Preview
 

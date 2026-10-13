@@ -11,12 +11,18 @@ Options:
   --to YYYY-MM-DD          End date; requires --from
   --submit                 Save prepared logs
   --headed                 Display the browser while running
+  --record                 Save a WebM recording to artifacts/
   --help, -h               Show this help message`);
   process.exit(0);
 }
 const valueFor = (name: string): string | undefined => {
-  const index = args.indexOf(name);
-  return index === -1 ? undefined : args[index + 1];
+  const index = args.findIndex(
+    (argument) => argument === name || argument.startsWith(`${name}=`),
+  );
+  if (index === -1) return undefined;
+
+  const argument = args[index];
+  return argument === name ? args[index + 1] : argument.slice(name.length + 1);
 };
 const singleDate = valueFor("--date") ?? new Date().toISOString().slice(0, 10);
 const month = valueFor("--month");
@@ -24,6 +30,7 @@ const from = valueFor("--from");
 const to = valueFor("--to");
 const submit = args.includes("--submit");
 const headed = args.includes("--headed");
+const record = args.includes("--record");
 const email = process.env.TIMESHEET_EMAIL;
 const password = process.env.TIMESHEET_PASSWORD;
 const timesheetUrl = process.env.TIMESHEET_URL ?? "";
@@ -81,7 +88,11 @@ if ((from && !to) || (!from && to) || (month && (from || to))) {
 }
 
 const browser = await chromium.launch({ headless: !headed });
-const page = await browser.newPage();
+const context = await browser.newContext(
+  record ? { recordVideo: { dir: "artifacts" } } : undefined,
+);
+const page = await context.newPage();
+const video = page.video();
 const requestedDates =
   from && to
     ? getDates(from, to)
@@ -196,5 +207,7 @@ try {
 
   console.log(JSON.stringify(results));
 } finally {
+  await context.close();
+  if (video) console.error(`Video saved to ${await video.path()}`);
   await browser.close();
 }

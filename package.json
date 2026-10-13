@@ -1,0 +1,16 @@
+{
+  "name": "mceasy-timesheet",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env timesheet.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "playwright": "^1.63.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.0.0"
+  }
+}

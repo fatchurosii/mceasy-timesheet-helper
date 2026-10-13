@@ -16,7 +16,7 @@ cp .env.example .env
 
 Fill `TIMESHEET_EMAIL` and `TIMESHEET_PASSWORD` in `.env`. `TIMESHEET_URL` is optional and defaults to the production Timesheet URL. The file is ignored by Git.
 
-`FEATURE` is optional and defaults to an empty string. `PUBLIC_HOLIDAY` is also optional and defaults to an empty string.
+`FEATURE` is required example fill `FEATURE="SaaS Modules - Monitoring (Fleet Management System)"` and defaults to an empty string. `PUBLIC_HOLIDAY` is optional example fill `PUBLIC_HOLIDAY="2025-01-01,..."` and defaults to an empty string.
 
 ## Options
 
